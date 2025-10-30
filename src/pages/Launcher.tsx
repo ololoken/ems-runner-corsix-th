@@ -20,22 +20,22 @@ import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { useTranslation} from 'react-i18next';
 import { Module } from '../types/Module';
+import { ModuleInstance } from '../assets/module/module';
+import { zipInputReader } from './dataInput';
 
 import DeleteIcon from '../components/icons/DeleteIcon';
 import LaunchIcon from '../components/icons/LaunchIcon';
-import TerminalIcon from '../components/icons/TerminalIcon';
 
 import ActionConfirmation from '../components/ActionConfirmation';
-import { ModuleInstance } from '../assets/module/module';
+import DemoIcon from '../components/icons/DemoIcon';
+import FolderIcon from '../components/icons/FolderIcon';
+import GlobeIcon from '../components/icons/GlobeIcon';
+import TerminalIcon from '../components/icons/TerminalIcon';
+import UploadIcon from '../components/icons/UploadIcon';
+import ZipIcon from '../components/icons/ZipIcon';
+import demoData from '../assets/module/demo.zip?url';
 import throwExpression from '../common/throwExpression';
 import useConfig from '../hooks/useConfig';
-import { zipInputReader } from './dataInput';
-import demoData from '../assets/module/demo.zip?url';
-import GlobeIcon from '../components/icons/GlobeIcon';
-import UploadIcon from '../components/icons/UploadIcon';
-import FolderIcon from "../components/icons/FolderIcon.tsx";
-import ZipIcon from "../components/icons/ZipIcon.tsx";
-import DemoIcon from "../components/icons/DemoIcon.tsx";
 
 export default () => {
   const { t } = useTranslation();
@@ -239,6 +239,10 @@ export default () => {
             >
                 <UploadIcon width="2.4em" height="2.4em" style={{ margin: '0 1em 0 0' }} />{t('menu.Add game data')}
             </Button>}
+            {readyToRun && !hasData && !mainRunning && <Button onClick={() => { fetchDemoData() }} sx={{fontSize: '10px'}}>
+              <DemoIcon width="2.4em" height="2.4em" style={{ margin: '0 1em 0 0' }} />
+              {t('menu.Try demo')}
+            </Button>}
             <Menu open={Boolean(uploadAnchorEl)} anchorEl={uploadAnchorEl} onClose={() => setUploadAnchorEl(undefined)}>
               <MenuItem onClick={() => { zipInput.current?.click(); setUploadAnchorEl(undefined) }} disabled={!zipInput.current} sx={{fontSize: '10px'}}>
                 <ListItemIcon><ZipIcon width="2.4em" height="2.4em" style={{ margin: '0 1em 0 0' }} /></ListItemIcon>
@@ -247,10 +251,6 @@ export default () => {
               <MenuItem onClick={() => { directoryInput.current?.click(); setUploadAnchorEl(undefined) }} disabled={!directoryInput.current} sx={{fontSize: '10px'}}>
                 <ListItemIcon><FolderIcon width="2.4em" height="2.4em" style={{ margin: '0 1em 0 0' }} /></ListItemIcon>
                 <ListItemText>{t('menu.Select data folder')}</ListItemText>
-              </MenuItem>
-              <MenuItem onClick={() => { fetchDemoData(); setUploadAnchorEl(undefined) }} sx={{fontSize: '10px'}}>
-                <ListItemIcon><DemoIcon width="2.4em" height="2.4em" style={{ margin: '0 1em 0 0' }} /></ListItemIcon>
-                <ListItemText>{t('menu.Try demo')}</ListItemText>
               </MenuItem>
             </Menu>
             <Tooltip title={t('menu.Toggle Console')} slotProps={{ popper: { sx: {
