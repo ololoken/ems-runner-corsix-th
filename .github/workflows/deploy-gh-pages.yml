@@ -20,6 +20,7 @@ jobs:
           ref: refs/heads/master
       - name: Build wasm module 🔧
         run: |
+          git config --global --add safe.directory "*"
           mkdir build && cd build && emcmake cmake .. -DCMAKE_BUILD_TYPE=Release && emmake make
           mkdir -p emscripten-module
           cp build/CorsixTH/corsix-th.* emscripten-module
