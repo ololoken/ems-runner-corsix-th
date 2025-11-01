@@ -21,7 +21,8 @@ jobs:
       - name: Build wasm module 🔧
         run: |
           git config --global --add safe.directory "*"
-          mkdir build && cd build && emcmake cmake .. -DCMAKE_BUILD_TYPE=Release && emmake make
+          emcmake cmake . -Bbuild --debug-output -LA -DCMAKE_BUILD_TYPE=Release
+          emcmake cmake --build build/ -- VERBOSE=1
           mkdir -p emscripten-module
           cp build/CorsixTH/corsix-th.* emscripten-module
       - name: Store artifact
